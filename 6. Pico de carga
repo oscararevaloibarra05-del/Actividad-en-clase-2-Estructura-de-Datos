@@ -1,0 +1,53 @@
+import java.util.Scanner;
+
+public class Main {
+
+    static int pico(int[] carga, int lo, int hi) {
+
+        // Caso base
+        if (lo == hi) {
+            return lo;
+        }
+
+        // Calcular el punto medio
+        int mid = lo + (hi - lo) / 2;
+
+        System.out.println("Analizando indice " + mid +
+                           " (" + carga[mid] + ") y su vecino " +
+                           (mid + 1) + " (" + carga[mid + 1] + ")");
+
+        // Si la carga aumenta hacia la derecha,
+        // buscamos el pico en la mitad derecha
+        if (carga[mid] < carga[mid + 1]) {
+            return pico(carga, mid + 1, hi);
+        }
+
+        // Si no aumenta hacia la derecha,
+        // el pico esta en mid o a la izquierda
+        return pico(carga, lo, mid);
+    }
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("¿Cuantos datos de carga desea ingresar? ");
+        int n = scanner.nextInt();
+
+        int[] carga = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            System.out.print("Ingrese la carga " + (i + 1) + ": ");
+            carga[i] = scanner.nextInt();
+        }
+
+        int indicePico = pico(carga, 0, n - 1);
+
+        System.out.println();
+        System.out.println("--- RESULTADO ---");
+        System.out.println("Indice del pico: " + indicePico);
+        System.out.println("Valor del pico: " + carga[indicePico]);
+
+        scanner.close();
+    }
+}
