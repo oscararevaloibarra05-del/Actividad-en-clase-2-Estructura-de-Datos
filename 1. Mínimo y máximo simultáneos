@@ -1,5 +1,6 @@
 git add .
-git commit -m //Cambios Ejercicio 1
+git commit -m //"Cambios Ejercicio 1"
+git push
 
 import java.util.Scanner;
 
