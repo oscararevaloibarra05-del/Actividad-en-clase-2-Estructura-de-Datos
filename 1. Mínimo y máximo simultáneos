@@ -1,0 +1,71 @@
+import java.util.Scanner;
+
+public class Main {
+
+    // Funcion recursiva para encontrar minimo y maximo
+    static int[] minMax(int[] latencias, int lo, int hi) {
+
+        // Caso base: un solo elemento
+        if (lo == hi) {
+            return new int[]{latencias[lo], latencias[lo]};
+        }
+
+        // Caso base: dos elementos
+        if (hi == lo + 1) {
+            if (latencias[lo] < latencias[hi]) {
+                return new int[]{latencias[lo], latencias[hi]};
+            } else {
+                return new int[]{latencias[hi], latencias[lo]};
+            }
+        }
+
+        // Dividir el arreglo
+        int mid = lo + (hi - lo) / 2;
+
+        // Resolver recursivamente la mitad izquierda
+        int[] izquierda = minMax(latencias, lo, mid);
+
+        // Resolver recursivamente la mitad derecha
+        int[] derecha = minMax(latencias, mid + 1, hi);
+
+        // Combinar los resultados
+        int minimo = Math.min(izquierda[0], derecha[0]);
+        int maximo = Math.max(izquierda[1], derecha[1]);
+
+        return new int[]{minimo, maximo};
+    }
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Cuantas latencias desea ingresar: ");
+        int n = scanner.nextInt();
+
+        // Validar que haya al menos un elemento
+        if (n <= 0) {
+            System.out.println("Debe ingresar al menos una latencia.");
+            scanner.close();
+            return;
+        }
+
+        int[] latencias = new int[n];
+
+        // Recibir los datos
+        for (int i = 0; i < n; i++) {
+            System.out.print("Ingrese la latencia " + (i + 1) + ": ");
+            latencias[i] = scanner.nextInt();
+        }
+
+        // Llamar a la funcion recursiva
+        int[] resultado = minMax(latencias, 0, n - 1);
+
+        // Mostrar resultados
+        System.out.println();
+        System.out.println("--- RESULTADO ---");
+        System.out.println("Latencia minima: " + resultado[0]);
+        System.out.println("Latencia maxima: " + resultado[1]);
+
+        scanner.close();
+    }
+}
